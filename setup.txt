@@ -1,0 +1,68 @@
+Problem
+A booking platform for a hotel (Sevista Hotel)
+
+
+User journey
+Users log in or sign up on the customer dashboard platform.
+Upon successful login/signup, users access the dashboard.
+A button allows users to create a booking.
+User information is preloaded into the booking form.
+Users select room type, number of occupants, and room service type.
+The price is calculated based on the selected options (room type rate * number_of_occupants_rate *  room_service_type_rate). These are the rates that will be adjusted for each field on the pricing dashboard. 
+Users select check-in and check-out dates.
+The total price is calculated based on the selected options and duration.
+Users confirm the booking.
+DB Access Patterns and Setup for user Journey
+
+Pricing Administration Interface (Avalonia UI):
+View rates: Retrieve rates from SQL Server database table named Rates.
+Change rates: Update rates in SQL Server database table named Rates.
+Remove rates: Delete rates from SQL Server database table named Rates.
+Add rates: Insert new rates into SQL Server database table named Rates.
+
+Booking System Form (Blazor):
+Load user information: Retrieve user information from MongoDB collection named Users.
+Load rates: Retrieve rates from SQL Server database table named Rates.
+Submit booking requests: Insert booking requests into MongoDB collection named Bookings.
+
+Customer Dashboard (Blazor):
+User sign up: Insert new users into MongoDB collection named Users.
+User login: Validate user credentials against user information stored in MongoDB collection named Users.
+View bookings: Retrieve bookings from MongoDB collection named Bookings.
+Delete bookings: Remove bookings from MongoDB collection named Bookings.
+Create bookings: Insert new bookings into MongoDB collection named Bookings.
+Update bookings: Update existing bookings in MongoDB collection named Bookings.
+
+Database Types:
+a. Pricing Administration Interface (Avalonia UI):
+SQL Server for managing rates.
+
+
+b. Booking System Form (Blazor):
+SQL Server for rates.
+MongoDB for booking requests.
+
+
+c. Customer Dashboard (Blazor):
+MongoDB for user management and bookings.
+
+Architecture
+1. Pricing Admin (Avalonia):
+MVVM ->Rate data CRUD SQL Server using ADO.NET
+
+2. Booking System Form (Blazor):
+MVVM + clean architecure -> Navigates to stripe Payment Page when Confirm booking is Clicked,
+
+3. Customer Dashboard (Blazor):
+MVVM + DDD ->  Signup, login using ADO.NET and JWT Tokens for Auth, Display confirmed user bookings from MongoDB on dashboard, Asynchronously loads confirmed bookings from MongoDB on dashboard page, Allows users to create bookings, allows users to request for booking termination
+
+
+APIs
+User Authentication and Authorization: ASP.NET Core Identity to handle user authentication, registration, and management.
+
+Database Access: Use Entity Framework Core (EF Core) for data access within the APIs. EF Core provides a convenient way to interact with databases using C# code.
+
+Security: JWT (JSON Web Tokens) authentication and authorization policies to protect APIs and ensure that only authenticated and authorized users can access sensitive resources.
+
+
+
